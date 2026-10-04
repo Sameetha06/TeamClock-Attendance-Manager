@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TeamClock · Attendance Manager</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="err"></div>
+<header>
+  <div class="brand"><span class="dot"></span>TeamClock</div>
+  <nav id="tabs">
+    <button class="on" data-t="dash">Dashboard</button>
+    <button data-t="today">Today</button>
+    <button data-t="cal">Calendar</button>
+    <button data-t="team">Team</button>
+  </nav>
+  <div class="right">
+    <div class="clock"><b id="time">--:--:--</b><small id="date"></small></div>
+    <button class="ghost" id="export">Export CSV</button>
+    <button class="ghost" id="theme" title="Toggle theme">◐</button>
+  </div>
+</header>
+
+<main>
+  <section id="dash" class="view on">
+    <div class="kpis" id="kpis"></div>
+    <div class="grid2">
+      <div class="card"><h3>Last 7 working days</h3><canvas id="chart" width="560" height="240"></canvas></div>
+      <div class="card"><h3>Attendance by department today</h3><div id="depts"></div></div>
+    </div>
+    <div class="card"><h3>On-time streaks (days in a row)</h3><div class="streaks" id="streaks"></div></div>
+  </section>
+
+  <section id="today" class="view">
+    <div class="bar">
+      <input id="q" placeholder="Search employee or department">
+      <select id="f"><option value="">All statuses</option><option>Present</option><option>Late</option><option>Absent</option><option>Leave</option><option>Not in</option></select>
+      <button id="allIn">Check in everyone not in</button>
+    </div>
+    <div class="card flush"><table><thead><tr><th>Employee</th><th>Status</th><th>In</th><th>Out</th><th>Hours</th><th>Actions</th></tr></thead><tbody id="rows"></tbody></table></div>
+  </section>
+
+  <section id="cal" class="view">
+    <div class="bar">
+      <select id="who"></select>
+      <button class="ghost" id="prev">‹</button><b id="month"></b><button class="ghost" id="next">›</button>
+    </div>
+    <div class="grid2">
+      <div class="card"><div class="cal" id="grid"></div></div>
+      <div class="card"><h3>Month summary</h3><div id="sum"></div><div class="legend" id="legend"></div></div>
+    </div>
+  </section>
+
+  <section id="team" class="view">
+    <div class="bar">
+      <input id="nm" placeholder="Full name">
+      <input id="dp" placeholder="Department" list="dl"><datalist id="dl"></datalist>
+      <button id="add">Add employee</button>
+    </div>
+    <div class="people" id="people"></div>
+  </section>
+</main>
+
+<dialog id="dlg">
+  <h3 id="dlgT">Edit attendance</h3>
+  <label>Status</label>
+  <select id="eS"><option>Present</option><option>Late</option><option>Absent</option><option>Leave</option></select>
+  <label>Check in</label><input type="time" id="eI">
+  <label>Check out</label><input type="time" id="eO">
+  <div class="acts"><button class="ghost" id="eC">Cancel</button><button id="eV">Save</button></div>
+</dialog>
+<div id="toast"></div>
+<script src="script.js"></script>
+</body>
+</html>
